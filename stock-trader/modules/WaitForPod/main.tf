@@ -19,7 +19,7 @@ variable "args" {
 resource "null_resource" "ExecuteK8s" {
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/waitForPod.sh",
+      "chmod +x /tmp/executeKubectl.sh",
       "bash /tmp/executeKubectl.sh ${var.args}",
     ]
 
