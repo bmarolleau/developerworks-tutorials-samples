@@ -16,11 +16,11 @@ variable "args" {
   description = "command to manage paiv users"
 }
 
-resource "null_resource" "WaitingForDb2Pod" {
+resource "null_resource" "ExecuteK8s" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/waitForPod.sh",
-      "bash /tmp/waitForPod.sh ${var.namespace} ${var.args}",
+      "bash /tmp/executeKubectl.sh ${var.args}",
     ]
 
     connection {
