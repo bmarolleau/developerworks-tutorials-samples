@@ -21,7 +21,7 @@ resource "null_resource" "WaitingForDb2Pod" {
     connection {
       host     = "${var.host}"
       type     = "ssh"
-      user     = "root"
+      user     = "ibmadmin"
       password = "${var.root_password}"
     }
   }
