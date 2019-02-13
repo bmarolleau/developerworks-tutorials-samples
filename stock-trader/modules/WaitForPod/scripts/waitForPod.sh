@@ -4,64 +4,19 @@
 #disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 
 #!/bin/bash
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <namespace>"
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <namespace> <vision mgmt args>"
     exit 1
 fi
 namespace=$1
+args=$2
 
 success="false"
-for j in {1..10}
-do
-        i=0
-        arr=()
-
-    #`kubectl get pods -n ${namespace} > status.txt`
-     `kubectl get -n ${namespace} pods |grep "db2\|mq\|redis" > status.txt`
-        while read LINE
-        do
-                status=`echo $LINE | awk '{print $3}'`
-
-                #Skip the first iteration
-                #if [ "$status" == "STATUS" ]
-                #then
-                #       continue
-                #fi
-
-                #Check which services are not in running state
-                if [ "$status" != "Running" ]
-                then
-                        microservice=`echo $LINE | awk '{print $1}'`
-                        arr[$i]=$microservice
-                        let i++
-                        echo "$microservice is not running"
-                fi
-
-                if [[ "$status" == "Pending" || "$status" == "CrashLoopBackOff" || "$status" == "ErrImagePull" || "$status" == "ImagePullBackOff" ]]
-                then
-                        echo "$microservice is in $status state"
-                        exit 1
-                                                                                                                                                                   1,1           Top
- 				fi
-
-        done < status.txt
-
-        #After each iteration check if all the services are in running state or wait for 60s and try again
-        if [ $i -gt 0 ]
-        then
-           echo "Wait for 30 Seconds and then check again"
-           sleep 30
-        else
-             echo "All the services are in running state"
-             success="true"
-             exit 0
-        fi
-
-done
-
-if [ $success == "false" ]
+#`kubectl get pods -n ${namespace} > status.txt`
+status=`kubectl  -n ${namespace} kubectl run  --rm -i --restart=Never usermgt --image=mycluster.icp:8500/ibmcom/powerai-vision-usermgt:1.1.2.0 $args`
+    
+if [ $status == 0  ]
 then
-    echo "Services are not in running state even after multiple attempts"
-        echo -e "\nFollowing services are not running : \n${arr[@]}"
-        exit 1
+    echo $status
+    echo -e "\nOK!!\n${arr[@]}"
 fi
