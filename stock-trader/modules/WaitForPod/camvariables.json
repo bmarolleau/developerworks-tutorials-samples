@@ -22,6 +22,17 @@
       "immutable": false
     },
     {
+      "name": "args",
+      "description": "args",
+      "default": "-- create --user team3 --password abc123 --release vision",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "args",
+      "hidden": false,
+      "immutable": false
+     },    
+    {
       "name": "root_password",
       "description": "ssh root password",
       "type": "string",
