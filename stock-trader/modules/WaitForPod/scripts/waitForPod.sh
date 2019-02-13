@@ -12,11 +12,7 @@ namespace=$1
 args=$2
 #-- create --user team3 --password abc123 --release vision
 success="false"
+
 #`kubectl get pods -n ${namespace} > status.txt`
-status=`kubectl  -n ${namespace} kubectl run  --rm -i --restart=Never usermgt --image=mycluster.icp:8500/ibmcom/powerai-vision-usermgt:1.1.2.0 $args`
-    
-if [ $status == 0  ]
-then
-    echo $status
-    echo -e "\nOK!!\n${arr[@]}"
-fi
+kubectl  -n ${namespace} run  --rm -i --restart=Never usermgt --image=mycluster.icp:8500/ibmcom/powerai-vision-usermgt:1.1.2.0 $args
+
