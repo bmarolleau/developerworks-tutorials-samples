@@ -11,11 +11,16 @@ variable "namespace" {
   description = "namespace"
 }
 
+variable "args" {
+  default     = "-- create --user team3 --password abc123 --release vision"
+  description = "command to manage paiv users"
+}
+
 resource "null_resource" "WaitingForDb2Pod" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/waitForPod.sh",
-      "bash /tmp/waitForPod.sh ${var.namespace}",
+      "bash /tmp/waitForPod.sh ${var.namespace} ${var.args}",
     ]
 
     connection {
