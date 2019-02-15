@@ -21,6 +21,7 @@
       "hidden": false,
       "immutable": false
     },
+    
     {
       "name": "args",
       "description": "args",
@@ -33,15 +34,56 @@
       "immutable": false
      },    
     {
-      "name": "root_password",
-      "description": "ssh root password",
+      "name": "password",
+      "description": "ssh user password",
       "type": "string",
       "required": true,
       "secured": false,
-      "label": "root_password",
+      "label": "password",
+      "hidden": false,
+      "immutable": false
+    },
+    {
+      "name": "username",
+      "description": "ssh username",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "username",
+      "hidden": false,
+      "immutable": false
+    },
+     {
+      "name": "icp_username",
+      "description": "icp username",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "icp admin username",
+      "hidden": false,
+      "immutable": false
+    },
+      {
+      "name": "icp_password",
+      "description": "icp password",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "icp admin password",
+      "hidden": false,
+      "immutable": false
+    },
+     {
+      "name": "icp_master_ip",
+      "description": "icp master ip",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "icp master ip",
       "hidden": false,
       "immutable": false
     }
+    
   ],
   "template_output_params": []
 }
