@@ -1,13 +1,13 @@
 {
-  "description": "wait for pods to be in running state",
-  "name": "WaitForPod",
+  "description": "Execute Kubectl command",
+  "name": "executeKubectl",
   "type": "userCreated",
   "manifest": {
     "template_type": "Terraform",
     "template_provider": "Other",
     "icon": "serviceicon_1.svg",
     "template": {
-      "templateData": "variable \"host\" {\n  description = \"IP of host to ssh\"\n}\n\nvariable \"root_password\" {\n  description = \"ssh root password\"\n}\n\nvariable \"namespace\" {\n  default     = \"default\"\n  description = \"namespace\"\n}\n\nresource \"null_resource\" \"WaitingForDb2Pod\" {\n  provisioner \"remote-exec\" {\n    inline = [\n      \"chmod +x /tmp/waitForPod.sh\",\n      \"bash /tmp/waitForPod.sh ${var.namespace}\",\n    ]\n\n    connection {\n      host     = \"${var.host}\"\n      type     = \"ssh\"\n      user     = \"root\"\n      password = \"${var.root_password}\"\n    }\n  }\n}",
+      "templateData": "variable \"host\" {\n  description = \"IP of host to ssh\"\n}\n\nvariable \"user_password\" {\n  description = \"ssh user password\"\n}\n\nvariable \"namespace\" {\n  default     = \"default\"\n  description = \"namespace\"\n}\n\nresource \"null_resource\" \"WaitingForDb2Pod\" {\n  provisioner \"remote-exec\" {\n    inline = [\n      \"chmod +x /tmp/waitForPod.sh\",\n      \"bash /tmp/waitForPod.sh ${var.namespace}\",\n    ]\n\n    connection {\n      host     = \"${var.host}\"\n      type     = \"ssh\"\n      user     = \"root\"\n      password = \"${var.root_password}\"\n    }\n  }\n}",
       "templateVariables": {
         "template_input_params": [
           {
@@ -32,9 +32,9 @@
             "immutable": false
           },
            {
-            "name": "args",
-            "description": "args",
-            "default": " -- create --user team3 --password abc123 --release vision",
+            "name": "kubectlargs",
+            "description": "kubectlargs",
+            "default": " --rm -i --restart=Never usermgt --image=mycluster.icp:8500/ibmcom/powerai-vision-usermgt:1.1.2.0 -- create --user team3 --password abc123 --release vision",
             "type": "string",
             "required": true,
             "secured": false,
@@ -44,7 +44,18 @@
           }
           ,
           {
-            "name": "root_password",
+      "name": "username",
+      "description": "ssh username",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "username",
+      "hidden": false,
+      "immutable": false
+}
+          ,
+          {
+            "name": "password",
             "description": "ssh root password",
             "type": "string",
             "required": true,
@@ -52,14 +63,44 @@
             "label": "root_password",
             "hidden": false,
             "immutable": false
-          }
+          },
+           {
+      "name": "icp_username",
+      "description": "icp username",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "icp admin username",
+      "hidden": false,
+      "immutable": false
+    },
+      {
+      "name": "icp_password",
+      "description": "icp password",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "icp admin password",
+      "hidden": false,
+      "immutable": false
+    },
+     {
+      "name": "icp_master_ip",
+      "description": "icp master ip",
+      "type": "string",
+      "required": true,
+      "secured": false,
+      "label": "icp master ip",
+      "hidden": false,
+      "immutable": false
+}
         ],
         "template_output_params": []
       }
     }
   },
   "metadata": {
-    "displayName": "WaitForPod",
+    "displayName": "ExecuteKubectl",
     "bullets": []
   },
   "created_at": "2018-06-19T06:53:48.923Z",
