@@ -23,9 +23,9 @@
     },
     
     {
-      "name": "args",
-      "description": "args",
-      "default": "-- create --user team3 --password abc123 --release vision",
+      "name": "kubectlargs",
+      "description": "kubectlargs",
+      "default": "--rm -i --restart=Never usermgt --image=mycluster.icp:8500/ibmcom/powerai-vision-usermgt:1.1.2.0 -- create --user team3 --password abc123 --release vision",
       "type": "string",
       "required": true,
       "secured": false,
