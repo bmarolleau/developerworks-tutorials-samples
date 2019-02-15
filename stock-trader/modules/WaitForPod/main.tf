@@ -2,8 +2,11 @@ variable "host" {
   description = "IP of host to ssh"
 }
 
-variable "root_password" {
-  description = "ssh root password"
+variable "username" {
+  description = "ssh ibmadmin password"
+}
+variable "password" {
+  description = "ssh ibmadmin password"
 }
 
 variable "namespace" {
@@ -20,14 +23,14 @@ resource "null_resource" "ExecuteK8s" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/executeKubectl.sh",
-      "bash /tmp/executeKubectl.sh ${var.args}",
+      "bash /tmp/executeKubectl.sh ${var.namespace} ${var.args}",
     ]
 
     connection {
       host     = "${var.host}"
       type     = "ssh"
-      user     = "ibmadmin"
-      password = "${var.root_password}"
+      user     = "${var.username}"
+      password = "${var.password}"
     }
   }
 }
